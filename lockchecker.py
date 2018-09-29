@@ -25,5 +25,5 @@ while True:
             sendlog.append((res["channel"], res["ts"]))
         if (len(sendlog) > 10):
             mes = sendlog.pop(0)
-            sc.api_call("chat.delete", channel = mes[0], text = mes[1])
+            sc.api_call("chat.delete", channel = mes[0], ts = mes[1])
     time.sleep(1)
