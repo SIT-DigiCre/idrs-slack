@@ -2,6 +2,7 @@
 
 import RPi.GPIO as GPIO
 import os
+import time
 from slackclient import SlackClient
 
 sendchannel = "#bushitsu-locklog"
