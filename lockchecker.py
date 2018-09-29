@@ -17,13 +17,10 @@ sc.api_call("chat.postMessage", channel = sendchannel, text = "Hello. I woke up!
 
 sendlog = []
 while True:
-    ksbf = GPIO.input(keyStatusIn)
-    if (ksbf != keystatus):
-        if (ksbf):
-            res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked")
-        else:
-            res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":lock: locked")
-        keystatus = ksbf
+    ksup = GPIO.input(keyStatusIn)
+    if (ksup != keystatus):
+        res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if ksup else ":lock: locked")
+        keystatus = ksup
         if (res["ok"]):
             sendlog.append((res["channel"], res["ts"]))
         if (len(sendlog) > 10):
