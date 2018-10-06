@@ -1,27 +1,34 @@
 #!/usr/bin/env python3
 
-import RPi.GPIO as GPIO
 import os
 import time
+from smbus2 import SMBusWrapper
 from slackclient import SlackClient
 
 sendchannel = "#bushitsu-locklog"
 #sendchannel = "idrs-develop"
-keyStatusIn = 4
+i2caddr = 8
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(keyStatusIn, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-keystatus = False
+keystatus = None
+isunlocked = False
 
 sc = SlackClient(os.environ["SLACK_API_TOKEN"])
 sc.api_call("chat.postMessage", channel = sendchannel, text = "Hello. I woke up!")
 
 sendlog = []
 while True:
-    ksup = GPIO.input(keyStatusIn)
-    if (ksup != keystatus):
-        res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if ksup else ":lock: locked")
-        keystatus = ksup
+    try:
+        with SMBusWrapper(1) as bus:
+            readval = bus.read_byte_data(i2caddr, 0)
+            if (160 < readval and readval < 200):
+                isunlocked = True
+            elif (100 < readval and readval < 140):
+                isunlocked = False
+    except OSError:
+        pass
+    if (isunlocked != keystatus):
+        res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
+        keystatus = isunclocked
         if (res["ok"]):
             sendlog.append((res["channel"], res["ts"]))
         if (len(sendlog) > 10):
