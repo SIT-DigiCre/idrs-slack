@@ -3,8 +3,8 @@ Description=IDRS auto update script
 After=network.target
 
 [Service]
-WorkingDirectory=/home/digicre/idrs/idrs-slack
-ExecStart=/home/digicre/idrs/idrs-slack/autoupdate.sh
+WorkingDirectory=/home/digicre/idrs-slack
+ExecStart=/home/digicre/idrs-slack/autoupdate.sh
 Type=oneshot
 Restart=on-failure
 
