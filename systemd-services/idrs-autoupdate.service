@@ -4,6 +4,7 @@ Required=network.target
 After=network.target network-online.target
 
 [Service]
+User=digicre
 WorkingDirectory=/home/digicre/idrs-slack
 ExecStart=/home/digicre/idrs-slack/autoupdate.sh
 Type=oneshot
