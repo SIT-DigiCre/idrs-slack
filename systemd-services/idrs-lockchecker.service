@@ -1,0 +1,13 @@
+[Unit]
+Description=IDRS lock checker script
+Wants=idrs-autoupdate.service
+After=idrs-autoupdate.service
+
+[Service]
+WorkingDirectory=/home/digicre/idrs/idrs-slack
+ExecStart=/home/digicre/idrs/idrs-slack/lockchecker.py
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
