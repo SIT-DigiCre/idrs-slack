@@ -3,4 +3,4 @@
 SCRIPT_DIR=$(dirname $0)
 cd $SCRIPT_DIR
 
-./lockchecker.py &
+git pull
