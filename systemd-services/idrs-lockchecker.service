@@ -7,6 +7,7 @@ After=idrs-autoupdate.service
 User=digicre
 WorkingDirectory=/home/digicre/idrs-slack
 ExecStart=/usr/local/bin/pipenv run ./lockchecker.py
+EnvironmentFile=/etc/environment
 Type=simple
 Restart=always
 
