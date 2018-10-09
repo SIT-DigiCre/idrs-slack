@@ -28,7 +28,7 @@ while True:
         pass
     if (isunlocked != keystatus):
         res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
-        keystatus = isunclocked
+        keystatus = isunlocked
         if (res["ok"]):
             sendlog.append((res["channel"], res["ts"]))
         if (len(sendlog) > 10):
