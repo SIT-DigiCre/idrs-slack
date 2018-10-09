@@ -5,7 +5,7 @@ After=idrs-autoupdate.service
 
 [Service]
 WorkingDirectory=/home/digicre/idrs-slack
-ExecStart=/home/digicre/idrs-slack/lockchecker.py
+ExecStart=/usr/local/bin/pipenv run lockchecker.py
 Type=simple
 Restart=always
 
