@@ -1,0 +1,15 @@
+[Unit]
+Description=IDRS lock checker script
+Wants=idrs-autoupdate.service
+After=idrs-autoupdate.service
+
+[Service]
+User=digicre
+WorkingDirectory=/home/digicre/idrs-slack
+ExecStart=/usr/local/bin/pipenv run ./lockchecker.py
+EnvironmentFile=/etc/environment
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
