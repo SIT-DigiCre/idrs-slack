@@ -6,8 +6,7 @@ After=idrs-autoupdate.service
 [Service]
 User=digicre
 WorkingDirectory=/home/digicre/idrs-slack
-ExecStart=/usr/local/bin/pipenv run ./lockchecker.py
-EnvironmentFile=/etc/environment
+ExecStart=/usr/bin/docker run -t --rm -v `pwd`:/script --env-file /etc/environment --privileged idrs-python:0.1 /bin/bash -c "cd /script && pipenv install && pipenv run ./lockchecker.py"
 Type=simple
 Restart=always
 
