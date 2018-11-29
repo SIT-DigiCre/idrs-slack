@@ -2,6 +2,7 @@
 
 import os
 import time
+import urllib
 from smbus2 import SMBusWrapper
 from slackclient import SlackClient
 
@@ -28,6 +29,9 @@ while True:
         pass
     if (isunlocked != keystatus):
         res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
+        with (urllib.request.urlopen(urllib.request.Request("http://localhost:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
+            body = res.read()
+        print(body)
         keystatus = isunlocked
         if (res["ok"]):
             sendlog.append((res["channel"], res["ts"]))
