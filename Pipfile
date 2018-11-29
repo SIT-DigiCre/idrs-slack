@@ -8,6 +8,9 @@ pip = "==18.0"
 "rpi.gpio" = "*"
 "smbus2" = "*"
 slackclient = "*"
+spidev = "*"
+numpy = "*"
+pillow = "*"
 
 [dev-packages]
 
