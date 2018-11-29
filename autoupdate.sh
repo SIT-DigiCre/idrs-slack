@@ -1,6 +1,10 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname $0)
-cd $SCRIPT_DIR
+cd `dirname $0`
 
-git pull
+dockerfiledata=`cat ./Dockerfile`
+if [ "`git pull`" != "Already up-to-date." ]; then
+	[ "`cat ./Dockerfile`" != "$dockerfiledata" ] && docker build -t idrs-python:0.1 ./
+fi
+
+exit 0
