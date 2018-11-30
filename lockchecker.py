@@ -29,16 +29,16 @@ while True:
         pass
     if (isunlocked != keystatus):
         res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
-        try:
-            with (urllib.request.urlopen(urllib.request.Request("http://epdserver:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
-                pass
-        except:
-            print("EPD server communication error")
-        print(body)
         keystatus = isunlocked
         if (res["ok"]):
             sendlog.append((res["channel"], res["ts"]))
         if (len(sendlog) > 10):
             mes = sendlog.pop(0)
             sc.api_call("chat.delete", channel = mes[0], ts = mes[1])
+        # Send e-paper display update request
+        try:
+            with (urllib.request.urlopen(urllib.request.Request("http://epdserver:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
+                pass
+        except:
+            print("EPD server communication error")
     time.sleep(1)
