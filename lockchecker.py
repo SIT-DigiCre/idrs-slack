@@ -29,8 +29,11 @@ while True:
         pass
     if (isunlocked != keystatus):
         res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
-        with (urllib.request.urlopen(urllib.request.Request("http://localhost:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
-            pass
+        try:
+            with (urllib.request.urlopen(urllib.request.Request("http://epdserver:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
+                pass
+        except:
+            print("EPD server communication error")
         print(body)
         keystatus = isunlocked
         if (res["ok"]):
