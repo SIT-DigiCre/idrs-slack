@@ -2,6 +2,7 @@
 
 import os
 import time
+import urllib.request
 from smbus2 import SMBusWrapper
 from slackclient import SlackClient
 
@@ -34,4 +35,10 @@ while True:
         if (len(sendlog) > 10):
             mes = sendlog.pop(0)
             sc.api_call("chat.delete", channel = mes[0], ts = mes[1])
+        # Send e-paper display update request
+        try:
+            with (urllib.request.urlopen(urllib.request.Request("http://epdserver:8081/?imgpath=disp-" + ("open" if isunlocked else "close") + ".png"))) as res:
+                pass
+        except:
+            print("EPD server communication error")
     time.sleep(1)

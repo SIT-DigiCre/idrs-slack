@@ -1,7 +1,7 @@
 [Unit]
 Description=IDRS auto update script
-Required=network-online.target
-After=network-online.target
+Required=network-online.target docker.service
+After=network-online.target docker.service
 
 [Service]
 User=digicre
