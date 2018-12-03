@@ -24,10 +24,10 @@ class UrlHandler(http.server.SimpleHTTPRequestHandler):
         reqquery = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
         if ("imgpath" in reqquery): imgpath = reqquery["imgpath"][0]
         txtkey = "0" if ("txtkey" not in reqquery) else reqquery["txtkey"][0]
-        if ("disptxt" in reqquery): txtlist[txtkey]["text"] = reqquery["disptxt"][0]
-        if (txtkey in txtlist):
-            txtlist[txtkey]["pos"] = (0, 0)
-            txtlist[txtkey]["size"] = 36
+        if ("disptxt" in reqquery):
+            if (txtkey not in txtlist): txtlist[txtkey] = { "pos": (0, 0), "size": 36 }
+            txtlist[txtkey]["text"] = reqquery["disptxt"][0]
+            if (len(txtlist[txtkey]["text"]) == 0): txtlist.pop(txtkey)
         try:
             if ("txtposx" in reqquery and "txtposy" in reqquery): txtlist[txtkey]["pos"] = (int(reqquery["txtposx"][0]), int(reqquery["txtposy"][0]))
         except:
