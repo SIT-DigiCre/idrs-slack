@@ -14,38 +14,38 @@ PORT = 8081
 epd = EPD()
 
 imgpath = ""
-disptxt = ""
-txtpos = (0, 0)
-txtsize = 36
+txtlist = {}
 
 class UrlHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         global imgpath
-        global disptxt
-        global txtpos
-        global txtsize
+        global txtlist
         res = "failed"
         reqquery = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
         if ("imgpath" in reqquery): imgpath = reqquery["imgpath"][0]
-        if ("disptxt" in reqquery): disptxt = reqquery["disptxt"][0]
+        txtkey = "0" if ("txtkey" not in reqquery) else reqquery["txtkey"][0]
+        if ("disptxt" in reqquery): txtlist[txtkey]["text"] = reqquery["disptxt"][0]
+        if (txtkey in txtlist):
+            txtlist[txtkey]["pos"] = (0, 0)
+            txtlist[txtkey]["size"] = 36
         try:
-            if ("txtposx" in reqquery and "txtposy" in reqquery): txtpos = (int(reqquery["txtposx"][0]), int(reqquery["txtposy"][0]))
+            if ("txtposx" in reqquery and "txtposy" in reqquery): txtlist[txtkey]["pos"] = (int(reqquery["txtposx"][0]), int(reqquery["txtposy"][0]))
         except:
             pass
         try:
-            if ("txtsize" in reqquery): txtsize = int(reqquery["txtsize"][0])
+            if ("txtsize" in reqquery): txtlist[txtkey]["size"] = int(reqquery["txtsize"][0])
         except:
-            txtsize = 36
+            pass
         if os.path.isfile("./img/" + imgpath):
             res = imgpath + " found!"
-            img = Image.open("./img/" + imgpath)
-            if (len(disptxt) > 0):
+            with Image.open("./img/" + imgpath) as img:
                 drw = ImageDraw.Draw(img)
-                drw.font = ImageFont.truetype("./img/IPAexfont00201/ipaexg.ttf", txtsize)
-                drw.text(txtpos, disptxt, (0, 0, 0))
-            epd.init()
-            epd.display_frame(epd.get_frame_buffer(img))
-            epd.sleep()
+                for drwtxt in txtlist.values():
+                    drw.font = ImageFont.truetype("./img/fonts/ipaexg.ttf", drwtxt["size"])
+                    drw.text(drwtxt["pos"], drwtxt["text"], (0, 0, 0))
+                epd.init()
+                epd.display_frame(epd.get_frame_buffer(img))
+                epd.sleep()
         else:
             res = imgpath + " not found!"
         print(res)
