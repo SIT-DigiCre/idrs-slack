@@ -20,6 +20,10 @@ txtsize = 36
 
 class UrlHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
+        global imgpath
+        global disptxt
+        global txtpos
+        global txtsize
         res = "failed"
         reqquery = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
         if ("imgpath" in reqquery): imgpath = reqquery["imgpath"][0]
