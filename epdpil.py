@@ -167,7 +167,7 @@ class EPD:
 
     def get_frame_buffer(self, image, trh = THRESHOLD):
         buf = [0x00] * (self.width * self.height // 8)
-        image = Image.open(image if (isinstance(image, str)) else io.BytesIO(image))
+        if (isinstance(image, str)): image = Image.open(image)
         if (image.size[0] != self.width or image.size[1] != self.height):
             raise ValueError("Image size error!")
         image = np.array(image.convert("L"))
