@@ -43,6 +43,7 @@ def updateEPDData(req):
             except:
                 epddata["txtlist"].pop(str(key))
                 return { "res": False, "epddata": epddata }
+    return { "res": True, "epddata": epddata }
 
 def updateEPD():
     with Image.open("./img/" + epddata["imgpath"]) as img:
