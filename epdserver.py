@@ -28,7 +28,7 @@ def updateEPDData(req):
                 continue
             if (str(key) not in epddata["txtlist"] and ("text" not in req["txtlist"][key] or len(str(req["txtlist"][key]["text"])) == 0)):
                 continue
-            if ("text" in req["txtlist"][key]): epddata["txtlist"][str(key)]["text"] = req["txtlist"][key]["text"]
+            if ("text" in req["txtlist"][key]): epddata["txtlist"][str(key)] = { "text": req["txtlist"][key]["text"] }
             try:
                 if ("posx" in req["txtlist"][key] and "posy" in req["txtlist"][key]):
                     epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["posx"]), int(req["txtlist"][key]["posy"]))
