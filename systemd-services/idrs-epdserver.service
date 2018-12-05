@@ -6,7 +6,8 @@ After=idrs-autoupdate.service
 [Service]
 User=digicre
 WorkingDirectory=/home/digicre/idrs-slack
-ExecStart=/usr/bin/docker run --name epdserver -t --rm -v /home/digicre/idrs-slack:/script --env-file /etc/environment --privileged -p 5001:5001 idrs-python:0.1 /bin/bash -c "cd /script && pipenv run ./epdserver.py"
+ExecStartPre=-/usr/bin/docker stop epdserver
+ExecStart=/usr/bin/docker run --name epdserver -t --rm -v /home/digicre/idrs-slack:/script --env-file /etc/environment --privileged -p 5001:5001/udp idrs-python:0.1 /bin/bash -c "cd /script && pipenv run ./epdserver.py"
 Type=simple
 Restart=always
 
