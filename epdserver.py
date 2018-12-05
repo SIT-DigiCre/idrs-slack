@@ -11,7 +11,7 @@ from epdpil import EPD
 PORT = 5001
 epd = EPD()
 
-epddata = { "imgpath": "", txtlist: {} }
+epddata = { "imgpath": "", "txtlist": {} }
 
 
 def updateEPDData(req):
