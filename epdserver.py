@@ -32,6 +32,8 @@ def updateEPDData(req):
             try:
                 if ("posx" in req["txtlist"][key] and "posy" in req["txtlist"][key]):
                     epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["posx"]), int(req["txtlist"][key]["posy"]))
+                elif ("pos" in req["txtlist"][key] and len(req["txtlist"][key]["pos"]) == 2): 
+                    epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["pos"][0]), int(req["txtlist"][key]["pos"][1]))
                 else: epddata["txtlist"][str(key)]["pos"] = (0, 0)
                 if ("size" in req["txtlist"][key]): epddata["txtlist"][str(key)]["size"] = int(req["txtlist"][key]["size"])
                 else: epddata["txtlist"][str(key)]["size"] = 36
