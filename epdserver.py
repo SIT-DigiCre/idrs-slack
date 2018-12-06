@@ -16,6 +16,8 @@ epddata = { "imgpath": "", "txtlist": {} }
 
 def updateEPDData(req):
     global epddata
+    if (len(req) == 0):
+        return { "res": False, "epddata": epddata }
     if ("imgpath" in req and len(str(req["imgpath"])) > 0):
         if (os.path.isfile("./img/" + str(req["imgpath"]))):
             epddata["imgpath"] = str(req["imgpath"])
@@ -28,7 +30,9 @@ def updateEPDData(req):
                 continue
             if (str(key) not in epddata["txtlist"] and ("text" not in req["txtlist"][key] or len(str(req["txtlist"][key]["text"])) == 0)):
                 continue
-            if ("text" in req["txtlist"][key]): epddata["txtlist"][str(key)] = { "text": req["txtlist"][key]["text"] }
+            if ("text" in req["txtlist"][key]):
+                if (str(key) in epddata["txtlist"]): epddata["txtlist"][str(key)]["text"] = req["txtlist"][key]["text"]
+                else: epddata["txtlist"][str(key)] = { "text": req["txtlist"][key]["text"] }
             try:
                 if ("posx" in req["txtlist"][key] and "posy" in req["txtlist"][key]):
                     epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["posx"]), int(req["txtlist"][key]["posy"]))
