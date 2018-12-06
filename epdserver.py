@@ -32,18 +32,15 @@ def updateEPDData(req):
                 continue
             if ("text" in req["txtlist"][key]):
                 if (str(key) in epddata["txtlist"]): epddata["txtlist"][str(key)]["text"] = req["txtlist"][key]["text"]
-                else: epddata["txtlist"][str(key)] = { "text": req["txtlist"][key]["text"] }
+                else: epddata["txtlist"][str(key)] = { "text": req["txtlist"][key]["text"], "pos": (0, 0), "size": 36, "font": "ipaexg.ttf" }
             try:
                 if ("posx" in req["txtlist"][key] and "posy" in req["txtlist"][key]):
                     epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["posx"]), int(req["txtlist"][key]["posy"]))
                 elif ("pos" in req["txtlist"][key] and len(req["txtlist"][key]["pos"]) == 2): 
                     epddata["txtlist"][str(key)]["pos"] = (int(req["txtlist"][key]["pos"][0]), int(req["txtlist"][key]["pos"][1]))
-                else: epddata["txtlist"][str(key)]["pos"] = (0, 0)
                 if ("size" in req["txtlist"][key]): epddata["txtlist"][str(key)]["size"] = int(req["txtlist"][key]["size"])
-                else: epddata["txtlist"][str(key)]["size"] = 36
                 if ("font" in req["txtlist"][key] and os.path.isfile("./img/fonts/" + str(req["txtlist"][key]["font"]))):
                     epddata["txtlist"][str(key)]["font"] = str(req["txtlist"][key]["font"])
-                else: epddata["txtlist"][str(key)]["font"] = "ipaexg.ttf"
             except:
                 epddata["txtlist"].pop(str(key))
                 return { "res": False, "epddata": epddata }
