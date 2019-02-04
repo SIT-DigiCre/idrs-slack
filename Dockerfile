@@ -10,8 +10,7 @@ ENV PIPENV_TIMEOUT 1000
 RUN apt-get update && apt-get install -y libjpeg-dev zlib1g-dev
 
 # Setup pipenv
-RUN mkdir /script
-COPY Pipfile /script/
-COPY Pipfile.lock /script/
-RUN cd /script && pipenv install
-RUN cd / && rm -rf /script
+COPY Pipfile ./
+COPY Pipfile.lock ./
+RUN pipenv install --system
+RUN rm Pipfile Pipfile.lock
