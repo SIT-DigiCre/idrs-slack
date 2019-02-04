@@ -1,0 +1,26 @@
+version: '2'
+services:
+  lockchecker:
+    build: .
+    image: idrs-python:0.1
+    volumes:
+      - .:/script
+    depends_on:
+      - epdserver
+    env_file:
+      - /etc/environment
+    privileged: true
+    command: '/bin/bash -c "cd /script && ./lockchecker.py"'
+  epdserver:
+    build: .
+    image: idrs-python:0.1
+    volumes:
+      - .:/script
+    ports:
+      - "5001:5001/udp"
+    env_file:
+      - /etc/environment
+    environment:
+      TZ: "Asia/Toyko"
+    privileged: true
+    command: '/bin/bash -c "cd /script && ./epdserver.py"'
