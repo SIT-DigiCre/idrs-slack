@@ -2,7 +2,7 @@
 
 import os
 import time
-import socket
+import urllib.request
 import json
 from smbus2 import SMBusWrapper
 from slackclient import SlackClient
@@ -41,8 +41,9 @@ while True:
             sc.api_call("chat.delete", channel = mes[0], ts = mes[1])
         # Send e-paper display update request
         try:
-            sock.sendto(json.dumps({ "imgpath": "disp-" + ("open" if isunlocked else "close") + ".png" }).encode("utf-8"), ("epdserver", 5001))
-            print(sock.recvfrom(3072))
+            req = urllib.request.Request("http://epdserver:8081/update", "data=" + json.dumps({ "imgpath": "disp-" + ("open" if isunlocked else "close") + ".png" }).encode("utf-8"), { "Content-Type": "application/json" })
+            with urllib.request.urlopen(req) as res:
+                print(res.read())
         except:
             print("EPD server communication error")
     time.sleep(1)
