@@ -67,15 +67,16 @@ def updatepost():
         epdupdateres = updateEPDData(json.loads(request.form["data"]))
         response = jsonify(epdupdateres)
         response.status_code = 200 if epdupdateres["status"] else 400
-        response.mimetype = "application/json"
         if epdupdateres["status"]:
             updateEPD()
-        return response
-    except:
+    except json.JSONDecodeError:
         response = jsonify({ "status": False, "data": epddata })
         response.status_code = 400
-        response.mimetype = "application/json"
-        return response
+    except:
+        response = jsonify({ "status": False, "data": epddata })
+        response.status_code = 500
+    response.mimetype = "application/json"
+    return response
 
 @app.route("/status", methods = ["get"])
 def getstatus():
