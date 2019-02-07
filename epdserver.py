@@ -58,26 +58,31 @@ def updateEPD():
         epd.display_frame(epd.get_frame_buffer(img))
         epd.sleep()
 
+
+# Exception define
+class UserRequestError(Exception):
+    pass
+
 #
 # Server
 #
 @app.route("/update", methods = ["post"])
 def updatepost():
     try:
-        if (not "data" in request.form): raise DataNotSet("data parameter isn't set!")
+        if (not "data" in request.form): raise UserRequestError("data parameter isn't set!")
         epdupdateres = updateEPDData(json.loads(request.form["data"]))
         response = jsonify(epdupdateres)
         response.status_code = 200 if epdupdateres["status"] else 400
         if epdupdateres["status"]:
             updateEPD()
-    except DataNotSet as e:
-        response = jsonify({ "status": False, "data": epddata, "message": e })
+    except UserRequestError as e:
+        response = jsonify({ "status": False, "data": epddata, "message": str(e) })
         response.status_code = 400
     except json.JSONDecodeError as e:
-        response = jsonify({ "status": False, "data": epddata, "message": e })
+        response = jsonify({ "status": False, "data": epddata, "message": str(e) })
         response.status_code = 400
     except Exception as e:
-        response = jsonify({ "status": False, "data": epddata, "message": e })
+        response = jsonify({ "status": False, "data": epddata, "message": str(e) })
         response.status_code = 500
     response.mimetype = "application/json"
     return response
