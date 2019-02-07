@@ -11,6 +11,7 @@ slackclient = "*"
 spidev = "*"
 numpy = "*"
 pillow = "*"
+flask = "*"
 
 [dev-packages]
 

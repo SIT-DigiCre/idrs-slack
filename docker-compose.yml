@@ -17,7 +17,7 @@ services:
     volumes:
       - .:/script
     ports:
-      - "5001:5001/udp"
+          - "8081:8081"
     env_file:
       - /etc/environment
     environment:
