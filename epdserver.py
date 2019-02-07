@@ -64,7 +64,7 @@ def updateEPD():
 @app.route("/update", methods = ["post"])
 def updatepost():
     try:
-        if (not "data" in request.form) raise DataNotSet("data parameter isn't set!")
+        if (not "data" in request.form): raise DataNotSet("data parameter isn't set!")
         epdupdateres = updateEPDData(json.loads(request.form["data"]))
         response = jsonify(epdupdateres)
         response.status_code = 200 if epdupdateres["status"] else 400
