@@ -14,9 +14,6 @@ i2caddr = 8
 keystatus = None
 isunlocked = False
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.settimeout(10)
-
 sc = SlackClient(os.environ["SLACK_API_TOKEN"])
 sc.api_call("chat.postMessage", channel = sendchannel, text = "Hello. I woke up!")
 
