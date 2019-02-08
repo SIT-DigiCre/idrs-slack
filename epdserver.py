@@ -66,7 +66,7 @@ class UserRequestError(Exception):
 #
 # Server
 #
-@app.route("/update", methods = ["post"])
+@app.route("/update", methods = ["post", "put"])
 def updatepost():
     try:
         if (not "data" in request.form): raise UserRequestError("data parameter isn't set!")
