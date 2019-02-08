@@ -69,8 +69,12 @@ class UserRequestError(Exception):
 @app.route("/update", methods = ["post", "put"])
 def updatepost():
     try:
-        if (not "data" in request.form): raise UserRequestError("data parameter isn't set!")
-        epdupdateres = updateEPDData(json.loads(request.form["data"]))
+        if (request.headers.get("Content-Type") == "application/json"):
+            req = request.json
+        else:
+            if (not "data" in request.form): raise UserRequestError("data parameter isn't set!")
+            req = json.loads(request.form["data"])
+        epdupdateres = updateEPDData(req)
         response = jsonify(epdupdateres)
         response.status_code = 200 if epdupdateres["status"] else 400
         if epdupdateres["status"]:
