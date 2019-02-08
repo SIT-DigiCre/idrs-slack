@@ -76,10 +76,10 @@ def updatepost():
         if epdupdateres["status"]:
             updateEPD()
     except UserRequestError as e:
-        response = jsonify({ "status": False, "data": epddata, "message": str(e) })
+        response = jsonify({ "status": False, "data": epddata, "message": "Bad request!\n" + str(e) })
         response.status_code = 400
     except json.JSONDecodeError as e:
-        response = jsonify({ "status": False, "data": epddata, "message": str(e) })
+        response = jsonify({ "status": False, "data": epddata, "message": "JSON decode error!\n" + str(e) })
         response.status_code = 400
     except Exception as e:
         response = jsonify({ "status": False, "data": epddata, "message": str(e) })
