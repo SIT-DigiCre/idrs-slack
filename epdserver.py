@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import socket
 import json
 from flask import Flask, request, jsonify
 from PIL import Image
@@ -55,7 +54,7 @@ def updateEPD():
             drw.font = ImageFont.truetype("./img/fonts/" + drwtxt["font"], drwtxt["size"])
             drw.text(drwtxt["pos"], drwtxt["text"], (0, 0, 0))
         epd.init()
-        epd.display_frame(epd.get_frame_buffer(img))
+        epd.display_frame(epd.get_frame_buffer(img.transpose(Image.ROTATE_180)))
         epd.sleep()
 
 
