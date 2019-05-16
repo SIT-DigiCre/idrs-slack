@@ -32,19 +32,15 @@ while True:
     if (isunlocked != keystatus):
         try:
             res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
-        except Exception as e:
-            print("Slack chat.postMessage error")
-            print(e)
-        keystatus = isunlocked
-        if (res["ok"]):
-            sendlog.append((res["channel"], res["ts"]))
-        if (len(sendlog) > 10):
-            mes = sendlog.pop(0)
-            try:
+            if (res["ok"]):
+                sendlog.append((res["channel"], res["ts"]))
+                keystatus = isunlocked
+            if (len(sendlog) > 10):
+                mes = sendlog.pop(0)
                 sc.api_call("chat.delete", channel = mes[0], ts = mes[1])
-            except Exception as e:
-                print("Slack chat.delete error")
-                print(e)
+        except Exception as e:
+            print("Slack API communication error")
+            print(e)
         # Send e-paper display update request
         try:
             req = urllib.request.Request("http://epdserver:8081/update", urllib.parse.urlencode({ "data": json.dumps({ "imgpath": "disp-" + ("open" if isunlocked else "close") + ".png" }) }).encode("utf-8"))
