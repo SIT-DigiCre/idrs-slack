@@ -1,6 +1,11 @@
 # Integrated Digicre Room Service - Slack
 This project aim to offer some services via Slack.
 
+## メンテナンスについて
+メンテナンスに必要な情報は、このREADMEファイルか本リポジトリのwikiに記載されています。
+
+ご質問等は、Slackの #idrs-develop チャンネルにお願いします。
+
 ## 使用機材
 * ~~Raspberry Pi Zero W~~ Raspberry Pi 3B に更新．私物です．
 * Arduino互換ボード (私物の[SparkFun Pro Micro 3.3V/8MHz](https://www.sparkfun.com/products/12587)で実装)
