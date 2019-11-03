@@ -31,10 +31,15 @@ while True:
         pass
     if (isunlocked != keystatus):
         try:
-            res = sc.api_call("chat.postMessage", channel = sendchannel, text = ":unlock: UNlocked" if isunlocked else ":lock: locked")
+            msg = ":unlock: UNlocked" if isunlocked else ":lock: locked"
+            res = sc.api_call("chat.postMessage", channel = sendchannel, text = msg)
             if (res["ok"]):
                 sendlog.append((res["channel"], res["ts"]))
                 keystatus = isunlocked
+                with open('tmpdata.json', mode = 'w') as f:
+                    json.dump({ "msg": msg,
+                                "channel": res["channel"], "ts": res["ts"],
+                                "unlocked": isunlocked }, f)
             if (len(sendlog) > 10):
                 mes = sendlog.pop(0)
                 sc.api_call("chat.delete", channel = mes[0], ts = mes[1])

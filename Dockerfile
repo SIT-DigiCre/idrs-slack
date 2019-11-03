@@ -1,5 +1,5 @@
-# Python 3.7 image on Debian stretch for ARMv7
-FROM arm32v7/python:3.7-stretch
+# Python 3.5 image on Debian stretch for ARMv7
+FROM python:3.5-buster
 
 # Install pipenv
 RUN pip install pipenv

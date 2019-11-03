@@ -11,6 +11,15 @@ services:
       - /etc/environment
     privileged: true
     command: '/bin/bash -c "cd /script && ./lockchecker.py"'
+  ssddetector:
+    build: .
+    image: idrs-python:0.1
+    volumes:
+      - .:/script
+    env_file:
+      - /etc/environment
+    privileged: true
+    command: '/bin/bash -c "cd /script && ./ssddetector.py"'
   epdserver:
     build: .
     image: idrs-python:0.1

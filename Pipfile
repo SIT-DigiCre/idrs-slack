@@ -1,19 +1,27 @@
 [[source]]
+name = "piwheels"
+url = "https://www.piwheels.org/simple"
+verify_ssl = true
+
+[[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
 [packages]
-pip = "==18.0"
 "rpi.gpio" = "*"
 "smbus2" = "*"
 slackclient = "*"
 spidev = "*"
-numpy = "*"
+numpy = "==1.14.5"
 pillow = "*"
 flask = "*"
+opencv-python = "==4.1.1.26"
+keras = "==1.2.2"
+h5py = "==2.10.0"
+tensorflow = "==1.0.0"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.5"
